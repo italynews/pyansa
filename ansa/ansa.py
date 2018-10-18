@@ -1,7 +1,9 @@
 import feedparser
 
-from constant import LINKS, CATEGORIES
-from exceptions import (InvalidCategoryException, InvalidArticleFieldException)
+from .constant import LINKS, CATEGORIES, BASE_URL
+from .exceptions import (InvalidCategoryException, InvalidArticleFieldException)
+from .utils import simple_get
+from bs4 import BeautifulSoup
 
 
 class Ansa():
@@ -36,4 +38,20 @@ class Ansa():
         return CATEGORIES
 
     def read_article(self, article_url):
-        pass
+        raw_html = simple_get(article_url)
+        html = BeautifulSoup(raw_html, 'html.parser')
+        article = {}
+        for elem in html.find_all('div', attrs={"class": "news-txt"}):
+            text = str(elem.text)
+            if "text" in article:
+                article["text"] = article["text"].append(text)
+            else:
+                article["text"] = text
+        summary = html.find('h2', attrs={"class": "news-stit"})
+        article["summary"] = summary.text
+        title = html.find('h1', attrs={"class": "news-title"})
+        article["title"] = title.text
+        div_of_image = html.find('div', attrs={'class': 'img-photo'})
+        image = div_of_image.next_element
+        article["image"] = {'src': BASE_URL+image['src'], 'alt': image['alt']}
+        return article
