@@ -1,5 +1,6 @@
 myenv/
 .vscode/
+*.pyc
 
 
 # Byte-compiled / optimized / DLL files
