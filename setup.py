@@ -6,8 +6,6 @@ setup(
     url='',
     install_requires=[
         'feedparser',
-
-
     ],
     description="ansa",
     license="MIT",
