@@ -44,3 +44,9 @@ ansa.get_article('myfield', 'myvalue', 'mycategory')
 >>> [article]
 ```
 With this method, you can filter articles by any field
+
+## Develop on this
+```sh
+pip install -r requirements-dev.txt
+pytest -s --cov
+```

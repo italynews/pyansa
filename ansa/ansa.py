@@ -42,7 +42,7 @@ class Ansa():
         html = BeautifulSoup(raw_html, 'html.parser')
         article = {}
         for elem in html.find_all('div', attrs={"class": "news-txt"}):
-            text = str(elem.text)
+            text = str(elem.text).replace(u'\xa0', u' ')
             if "text" in article:
                 article["text"] = article["text"].append(text)
             else:
