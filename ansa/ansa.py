@@ -52,6 +52,6 @@ class Ansa():
         title = html.find('h1', attrs={"class": "news-title"})
         article["title"] = title.text
         div_of_image = html.find('div', attrs={'class': 'img-photo'})
-        image = div_of_image.next_element
+        image = div_of_image.next_element.next_element
         article["image"] = {'src': BASE_URL+image['src'], 'alt': image['alt']}
         return article
